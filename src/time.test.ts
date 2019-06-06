@@ -87,5 +87,23 @@ describe('timeUtil', () => {
       }, err)
     }
   })
+
+  it('toObject', async () => {
+    try {
+      const result = TimeUtil.toObject('2018-05-18 09:06:03')
+      // global.logger.error(result)
+      assert.strictEqual(result[`years`], 2018)
+      assert.strictEqual(result[`months`], 4)
+      assert.strictEqual(result[`date`], 18)
+      assert.strictEqual(result[`hours`], 9)
+      assert.strictEqual(result[`minutes`], 6)
+      assert.strictEqual(result[`seconds`], 3)
+      assert.strictEqual(result[`milliseconds`], 0)
+    } catch (err) {
+      global.logger.error(err)
+      assert.throws(() => {
+      }, err)
+    }
+  })
 })
 
