@@ -1,4 +1,4 @@
-/** @module */
+import '@pefish/js-node-assist'
 import moment from 'moment'
 
 /**
