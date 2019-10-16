@@ -29,7 +29,7 @@ export default class TimeUtil {
           return  // 终止定时器
         }
       } catch (err) {
-        global.logger.debug(err)
+        global.logger.error(err)
       }
       TimeUtil.setInterval(fun, interval, command)
     }, interval)
@@ -50,7 +50,7 @@ export default class TimeUtil {
           break
         }
       } catch (err) {
-        global.logger.debug(err)
+        global.logger.error(err)
         if (exitIfErr === true) {
           throw err
         }
