@@ -1,5 +1,6 @@
 import '@pefish/js-node-assist'
 import moment from 'moment'
+import { resolve } from 'dns';
 
 /**
  * 时间工具类
@@ -42,7 +43,7 @@ export default class TimeUtil {
    * @param exitIfErr
    * @returns {Promise<void>}
    */
-  static async setIntervalV2 (fun: () => Promise<any>, interval: number, exitIfErr: boolean = false): Promise<void> {
+  static async setIntervalV2(fun: () => Promise<any>, interval: number, exitIfErr: boolean = false): Promise<void> {
     while (true) {
       try {
         const result = await fun()
@@ -65,14 +66,14 @@ export default class TimeUtil {
    * @param msg
    * @returns {Promise<void>}
    */
-  static async sleepSyncFor (globalName: string = 'signal', msg: string = 'blocking...'): Promise<void> {
+  static async sleepSyncFor(globalName: string = 'signal', msg: string = 'blocking...'): Promise<void> {
     while (global[globalName] === 1) {
       msg && global.logger.info(msg)
       await TimeUtil.sleep(3000)
     }
   }
 
-  static async sleepFor (globalSignalName: string = 'signal', globalRunningNumName: string = 'runningNum', msg: string = 'blocking...'): Promise<void> {
+  static async sleepFor(globalSignalName: string = 'signal', globalRunningNumName: string = 'runningNum', msg: string = 'blocking...'): Promise<void> {
     global[globalSignalName] = 1 // 指示所有程序该停了
     while (global[globalRunningNumName] !== 0 && global[globalRunningNumName] !== undefined) {
       msg && global.logger.info(msg, `running: ${global[globalRunningNumName]}`)
@@ -80,7 +81,7 @@ export default class TimeUtil {
     }
   }
 
-  static sleep (sleep: number): Promise<void> {
+  static sleep(sleep: number): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve()
@@ -89,11 +90,25 @@ export default class TimeUtil {
   }
 
   /**
+   * 超时包装函数。超时返回 true，没超时返回异步函数的返回值
+   * @param fun 异步函数
+   * @param timeout 超时时间
+   */
+  static timeout(fun: () => Promise<any>, timeout: number): Promise<boolean> {
+    return Promise.race([
+      fun(),
+      new Promise((resolve, _) =>
+        setTimeout(() => resolve(true), timeout)
+      ),
+    ])
+  }
+
+  /**
    * utc标准时间字符串转化为时间戳
    * @param mysqlDateTime
    * @returns {number}
    */
-  static utcStandardStrToTimestamp (mysqlDateTime: string): number {
+  static utcStandardStrToTimestamp(mysqlDateTime: string): number {
     return moment(mysqlDateTime).valueOf()
   }
 
@@ -103,11 +118,11 @@ export default class TimeUtil {
    * @param format
    * @returns {string}
    */
-  static toUtcStr (timestamp: number, format: string = 'YYYY-MM-DD HH:mm:ss:SSS'): string {
+  static toUtcStr(timestamp: number, format: string = 'YYYY-MM-DD HH:mm:ss:SSS'): string {
     return moment.utc(timestamp).format(format)
   }
 
-  static toUtcStandardStr (timestamp: number): string {
+  static toUtcStandardStr(timestamp: number): string {
     return moment.utc(timestamp).toISOString(false)
   }
 
@@ -123,11 +138,11 @@ export default class TimeUtil {
    * @param keepOffset {boolean} true的话就是2018-03-04T22:51:40.952+08:00, false就是2018-03-04T14:51:40.952Z
    * @returns {string}
    */
-  static geneUtcStandardStr (year: number, month: number = 2, day: number = 1, hour: number = 0, minute: number = 0, second: number = 0, millisecond: number = 0, keepOffset: boolean = true): string {
+  static geneUtcStandardStr(year: number, month: number = 2, day: number = 1, hour: number = 0, minute: number = 0, second: number = 0, millisecond: number = 0, keepOffset: boolean = true): string {
     return moment.utc(new Date(year, month - 1, day, hour, minute, second, millisecond)).toISOString(keepOffset)
   }
 
-  static toObject (timeStr: string): any {
+  static toObject(timeStr: string): any {
     return moment(timeStr).toObject()
   }
 
@@ -143,7 +158,7 @@ export default class TimeUtil {
    * @param format
    * @returns {string}
    */
-  static geneUtcStr (year: number, month: number = 2, day: number = 1, hour: number = 0, minute: number = 0, second: number = 0, millisecond: number = 0, format: string = 'YYYY-MM-DD HH:mm:ss'): string {
+  static geneUtcStr(year: number, month: number = 2, day: number = 1, hour: number = 0, minute: number = 0, second: number = 0, millisecond: number = 0, format: string = 'YYYY-MM-DD HH:mm:ss'): string {
     return moment.utc(new Date(year, month - 1, day, hour, minute, second, millisecond)).format(format)
   }
 
@@ -153,14 +168,14 @@ export default class TimeUtil {
    * @param format
    * @returns {string}
    */
-  static toLocalStr (date: string, format: string = 'YYYY-MM-DD HH:mm:ss'): string {
+  static toLocalStr(date: string, format: string = 'YYYY-MM-DD HH:mm:ss'): string {
     return moment.utc(date).local().format(format)
   }
 
   /**
    * 获取现在时刻的utc标准字符串
    */
-  static getCurrentUtcStandardStr (keepOffset: boolean = true): string {
+  static getCurrentUtcStandardStr(keepOffset: boolean = true): string {
     return moment.utc(new Date()).toISOString(keepOffset)
   }
 
@@ -168,7 +183,7 @@ export default class TimeUtil {
    * 当前时间
    * @returns {*|moment.Moment}
    */
-  static now (): any {
+  static now(): any {
     return moment()
   }
 
@@ -179,11 +194,11 @@ export default class TimeUtil {
    * @param unit {string}
    * @returns {moment.Moment}
    */
-  static sub (momentObj: any, num: number, unit: string): any {
+  static sub(momentObj: any, num: number, unit: string): any {
     return momentObj.subtract(num, unit)
   }
 
-  static add (momentObj: any, num: number, unit: string): any {
+  static add(momentObj: any, num: number, unit: string): any {
     return momentObj.add(num, unit)
   }
 
@@ -193,19 +208,19 @@ export default class TimeUtil {
    * @param time {Moment|String|Number|Date|Array}
    * @returns {*|boolean}
    */
-  static lt (momentObj: any, time: any): boolean {
+  static lt(momentObj: any, time: any): boolean {
     return momentObj.isBefore(time)
   }
 
-  static gt (momentObj: any, time: any): boolean {
+  static gt(momentObj: any, time: any): boolean {
     return momentObj.isAfter(time)
   }
 
-  static gtAndLt (momentObj: any, startTime: any, endTime: any): boolean {
+  static gtAndLt(momentObj: any, startTime: any, endTime: any): boolean {
     return momentObj.isBetween(startTime, endTime)
   }
 
-  static toMomentObj (str: string): any {
+  static toMomentObj(str: string): any {
     return moment(str)
   }
 
@@ -216,11 +231,11 @@ export default class TimeUtil {
    * @param unit {string} years, months, weeks, days, hours, minutes, seconds
    * @returns {*|number}
    */
-  static diff (momentObj1: any, momentObj2: any, unit: string): number {
+  static diff(momentObj1: any, momentObj2: any, unit: string): number {
     return momentObj1.diff(momentObj2, unit)
   }
 
-  static utcStandardStrToMomentObj (mysqlDateTime: string): any {
+  static utcStandardStrToMomentObj(mysqlDateTime: string): any {
     return moment(mysqlDateTime)
   }
 }

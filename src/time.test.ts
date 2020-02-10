@@ -1,4 +1,3 @@
-import 'js-node-assist'
 import TimeUtil from './time'
 import * as assert from 'assert'
 
@@ -44,6 +43,23 @@ describe('timeUtil', () => {
     try {
       const result = TimeUtil.lt(TimeUtil.now(), '2018-04-26 15:04:00')
       // logger.error(result)
+      // assert.strictEqual(tx['outputWithIndex'][0]['address'], 'moneyqMan7uh8FqdCA2BV5yZ8qVrc9ikLP')
+    } catch (err) {
+      global.logger.error(err)
+      assert.throws(() => {
+      }, err)
+    }
+  })
+
+  it('timeout', async () => {
+    try {
+      const a = `111`
+      const isTimeout = await TimeUtil.timeout(async () => {
+        console.log(a)
+        await TimeUtil.sleep(2000)
+        return `haha`
+      }, 3000)
+      console.error(isTimeout)
       // assert.strictEqual(tx['outputWithIndex'][0]['address'], 'moneyqMan7uh8FqdCA2BV5yZ8qVrc9ikLP')
     } catch (err) {
       global.logger.error(err)

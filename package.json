@@ -1,10 +1,11 @@
 {
   "name": "@pefish/js-util-time",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "types": "./types/time.d.ts",
   "main": "./lib/time.js",
   "scripts": {
-    "test": "mocha --require ts-node/register src/time.test.ts",
+    "test": "mocha --timeout 15000 --require ts-node/register src/time.test.ts",
+    "t": "mocha --timeout 15000 --require ts-node/register",
     "build": "tsc && yarn tslint",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "prepublish": "yarn build"
