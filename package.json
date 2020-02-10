@@ -1,6 +1,6 @@
 {
   "name": "@pefish/js-util-time",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "types": "./types/time.d.ts",
   "main": "./lib/time.js",
   "scripts": {

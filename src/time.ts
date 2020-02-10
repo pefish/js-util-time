@@ -90,15 +90,15 @@ export default class TimeUtil {
   }
 
   /**
-   * 超时包装函数。超时返回 true，没超时返回异步函数的返回值
+   * 超时包装函数。超时抛错，没超时返回异步函数的返回值
    * @param fun 异步函数
    * @param timeout 超时时间
    */
-  static timeout(fun: () => Promise<any>, timeout: number): Promise<boolean> {
+  static timeout<T>(fun: () => Promise<T>, timeout: number): Promise<T> {
     return Promise.race([
       fun(),
-      new Promise((resolve, _) =>
-        setTimeout(() => resolve(true), timeout)
+      new Promise((_, reject) =>
+        setTimeout(() => reject(`timeout`), timeout)
       ),
     ])
   }

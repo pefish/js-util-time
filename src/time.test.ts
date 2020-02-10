@@ -54,12 +54,14 @@ describe('timeUtil', () => {
   it('timeout', async () => {
     try {
       const a = `111`
-      const isTimeout = await TimeUtil.timeout(async () => {
+      const result = await TimeUtil.timeout(async (): Promise<{a: string}> => {
         console.log(a)
         await TimeUtil.sleep(2000)
-        return `haha`
+        return {
+          a: `11`,
+        }
       }, 3000)
-      console.error(isTimeout)
+      console.error(result.a)
       // assert.strictEqual(tx['outputWithIndex'][0]['address'], 'moneyqMan7uh8FqdCA2BV5yZ8qVrc9ikLP')
     } catch (err) {
       global.logger.error(err)
