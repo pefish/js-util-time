@@ -1,41 +1,10 @@
-import '@pefish/js-node-assist'
 import moment from 'moment'
-import { resolve } from 'dns';
 
 /**
  * 时间工具类
  * 2018-03-04T22:51:40+08:00 表示 2018-03-04 22:51:40 是utc时间+8之后的时间，utc时间是2018-03-04 14:51:40
  */
 export default class TimeUtil {
-
-  /**
-   * 异步
-   * @param fun
-   * @param interval
-   * @param command
-   */
-  static setInterval(fun: () => Promise<any>, interval: number, command: number = 1): void {
-    // 1正常运行、0停止、2忽略下一次执行
-    setTimeout(async () => {
-      try {
-        if (command === 0) {
-          // logger.error('task已停止')
-        } else if (command === 1) {
-          const result = await fun()
-          command = (result !== undefined ? result : 1)
-        } else if (command === 2) {
-          command = 1
-          // logger.info('此次循环被忽略')
-        } else if (command === -1) {
-          return  // 终止定时器
-        }
-      } catch (err) {
-        global.logger.error(err)
-      }
-      TimeUtil.setInterval(fun, interval, command)
-    }, interval)
-  }
-
   /**
    * await 可同步
    * @param fun
@@ -43,7 +12,7 @@ export default class TimeUtil {
    * @param exitIfErr
    * @returns {Promise<void>}
    */
-  static async setIntervalV2(fun: () => Promise<any>, interval: number, exitIfErr: boolean = false): Promise<void> {
+  static async setInterval(fun: () => Promise<any>, interval: number, exitIfErr: boolean = false): Promise<void> {
     while (true) {
       try {
         const result = await fun()
@@ -51,7 +20,7 @@ export default class TimeUtil {
           break
         }
       } catch (err) {
-        global.logger.error(err)
+        console.error(err)
         if (exitIfErr === true) {
           throw err
         }
@@ -68,7 +37,7 @@ export default class TimeUtil {
    */
   static async sleepSyncFor(globalName: string = 'signal', msg: string = 'blocking...'): Promise<void> {
     while (global[globalName] === 1) {
-      msg && global.logger.info(msg)
+      msg && console.info(msg)
       await TimeUtil.sleep(3000)
     }
   }
@@ -76,7 +45,7 @@ export default class TimeUtil {
   static async sleepFor(globalSignalName: string = 'signal', globalRunningNumName: string = 'runningNum', msg: string = 'blocking...'): Promise<void> {
     global[globalSignalName] = 1 // 指示所有程序该停了
     while (global[globalRunningNumName] !== 0 && global[globalRunningNumName] !== undefined) {
-      msg && global.logger.info(msg, `running: ${global[globalRunningNumName]}`)
+      msg && console.info(msg, `running: ${global[globalRunningNumName]}`)
       await TimeUtil.sleep(2000)
     }
   }

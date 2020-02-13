@@ -9,7 +9,7 @@ describe('timeUtil', () => {
       // logger.error(result)
       // assert.strictEqual(tx['outputWithIndex'][0]['address'], 'moneyqMan7uh8FqdCA2BV5yZ8qVrc9ikLP')
     } catch (err) {
-      global.logger.error(err)
+      console.error(err)
       assert.throws(() => {
       }, err)
     }
@@ -21,7 +21,7 @@ describe('timeUtil', () => {
       // logger.error(result)
       // assert.strictEqual(tx['outputWithIndex'][0]['address'], 'moneyqMan7uh8FqdCA2BV5yZ8qVrc9ikLP')
     } catch (err) {
-      global.logger.error(err)
+      console.error(err)
       assert.throws(() => {
       }, err)
     }
@@ -33,7 +33,7 @@ describe('timeUtil', () => {
       // logger.error(result)
       // assert.strictEqual(tx['outputWithIndex'][0]['address'], 'moneyqMan7uh8FqdCA2BV5yZ8qVrc9ikLP')
     } catch (err) {
-      global.logger.error(err)
+      console.error(err)
       assert.throws(() => {
       }, err)
     }
@@ -45,7 +45,7 @@ describe('timeUtil', () => {
       // logger.error(result)
       // assert.strictEqual(tx['outputWithIndex'][0]['address'], 'moneyqMan7uh8FqdCA2BV5yZ8qVrc9ikLP')
     } catch (err) {
-      global.logger.error(err)
+      console.error(err)
       assert.throws(() => {
       }, err)
     }
@@ -64,7 +64,7 @@ describe('timeUtil', () => {
       console.error(result.a)
       // assert.strictEqual(tx['outputWithIndex'][0]['address'], 'moneyqMan7uh8FqdCA2BV5yZ8qVrc9ikLP')
     } catch (err) {
-      global.logger.error(err)
+      console.error(err)
       assert.throws(() => {
       }, err)
     }
@@ -76,7 +76,7 @@ describe('timeUtil', () => {
       // logger.error(result)
       assert.strictEqual(result, -1)
     } catch (err) {
-      global.logger.error(err)
+      console.error(err)
       assert.throws(() => {
       }, err)
     }
@@ -88,7 +88,7 @@ describe('timeUtil', () => {
       // logger.error(result)
       assert.strictEqual(result, 1526634363000)
     } catch (err) {
-      global.logger.error(err)
+      console.error(err)
       assert.throws(() => {
       }, err)
     }
@@ -100,7 +100,7 @@ describe('timeUtil', () => {
       // logger.error(result, TimeUtil.now())
       // assert.strictEqual(result, 1526634363000)
     } catch (err) {
-      global.logger.error(err)
+      console.error(err)
       assert.throws(() => {
       }, err)
     }
@@ -109,7 +109,7 @@ describe('timeUtil', () => {
   it('toObject', async () => {
     try {
       const result = TimeUtil.toObject('2018-05-18 09:06:03')
-      // global.logger.error(result)
+      // console.error(result)
       assert.strictEqual(result[`years`], 2018)
       assert.strictEqual(result[`months`], 4)
       assert.strictEqual(result[`date`], 18)
@@ -118,7 +118,7 @@ describe('timeUtil', () => {
       assert.strictEqual(result[`seconds`], 3)
       assert.strictEqual(result[`milliseconds`], 0)
     } catch (err) {
-      global.logger.error(err)
+      console.error(err)
       assert.throws(() => {
       }, err)
     }

@@ -1,6 +1,6 @@
 {
   "name": "@pefish/js-util-time",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "types": "./types/time.d.ts",
   "main": "./lib/time.js",
   "scripts": {
@@ -8,10 +8,9 @@
     "t": "mocha --timeout 15000 --require ts-node/register",
     "build": "tsc && yarn tslint",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
-    "prepublish": "yarn build"
+    "prepublish": "yarn build && yarn test"
   },
   "dependencies": {
-    "@pefish/js-node-assist": "^0.6.6",
     "moment": "^2.24.0"
   },
   "devDependencies": {

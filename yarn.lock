@@ -18,19 +18,6 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@pefish/js-error@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@pefish/js-error/-/js-error-0.1.1.tgz#d3e6f4a1362206aaf73afd628465364c3a581ed2"
-  integrity sha512-JNLY0twr0fVEnGgrMetZsBZrStDGmHDX0dY9amDChTzVqrGEd6dvpzkR9BxINGhWgeAX6naTzI2FZn3ZwGlrsw==
-
-"@pefish/js-node-assist@^0.6.6":
-  version "0.6.6"
-  resolved "https://registry.yarnpkg.com/@pefish/js-node-assist/-/js-node-assist-0.6.6.tgz#62673762c0dcc8ce3faf20c8bb777008fb69a084"
-  integrity sha512-IvdZCVDZXi2oc25XlKEHC7bCMaTNyDmYN+wPpcRQOEpa1A4JEsscIVWbw33zNMeKWuOfVWdFdJopgxwchRHx3A==
-  dependencies:
-    "@pefish/js-error" "^0.1.1"
-    bignumber.js "^8.1.1"
-
 "@types/chai@^4.1.7":
   version "4.1.7"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.1.7.tgz#1b8e33b61a8c09cbe1f85133071baa0dbf9fa71a"
@@ -76,11 +63,6 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
-
-bignumber.js@^8.1.1:
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-8.1.1.tgz#4b072ae5aea9c20f6730e4e5d529df1271c4d885"
-  integrity sha512-QD46ppGintwPGuL1KqmwhR0O+N2cZUg8JG/VzwI2e28sM9TqHjQB10lI4QAaMHVbLzwVLLAwEglpKPViWX+5NQ==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
