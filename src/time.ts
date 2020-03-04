@@ -1,4 +1,5 @@
 import moment from 'moment'
+import util from 'util'
 
 /**
  * 时间工具类
@@ -20,7 +21,7 @@ export default class TimeUtil {
           break
         }
       } catch (err) {
-        console.error(err)
+        console.error(util.inspect(err))
         if (exitIfErr === true) {
           throw err
         }
