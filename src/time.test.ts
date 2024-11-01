@@ -76,6 +76,13 @@ describe("timeUtil", () => {
       );
       // logger.error(result)
       assert.strictEqual(result, -1);
+
+      const result1 = TimeUtil.diff(
+        TimeUtil.toMomentObj(1730433284000),
+        TimeUtil.toMomentObj(1730373167283),
+        "hours"
+      );
+      assert.strictEqual(result1, 16);
     } catch (err) {
       console.error(err);
       assert.throws(() => {}, err);
@@ -129,6 +136,29 @@ describe("timeUtil", () => {
       assert.strictEqual(result[`minutes`], 6);
       assert.strictEqual(result[`seconds`], 3);
       assert.strictEqual(result[`milliseconds`], 0);
+    } catch (err) {
+      console.error(err);
+      assert.throws(() => {}, err);
+    }
+  });
+
+  it("currentTimestamp", async () => {
+    try {
+      const result = TimeUtil.currentTimestamp();
+      console.error(result);
+    } catch (err) {
+      console.error(err);
+      assert.throws(() => {}, err);
+    }
+  });
+
+  it("lt", async () => {
+    try {
+      const result = TimeUtil.lt(
+        TimeUtil.toMomentObj(1730373167283),
+        1730373167282
+      );
+      assert.strictEqual(result, false);
     } catch (err) {
       console.error(err);
       assert.throws(() => {}, err);

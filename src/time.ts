@@ -1,4 +1,9 @@
-import moment from "moment";
+import moment, {
+  Moment,
+  MomentInput,
+  MomentObjectOutput,
+  unitOfTime,
+} from "moment";
 import util from "util";
 
 /**
@@ -96,13 +101,17 @@ export default class TimeUtil {
     return moment(mysqlDateTime).valueOf();
   }
 
+  static currentTimestamp(): number {
+    return moment().valueOf();
+  }
+
   /**
    * 时间戳转换为UTC字符串
-   * @param timestamp
+   * @param data
    * @param format
    * @returns {string}
    */
-  static timestampToUtcStr(
+  static toUtcStr(
     data: string | number | Date,
     format: string = "YYYY-MM-DD HH:mm:ss:SSS"
   ): string {
@@ -140,7 +149,7 @@ export default class TimeUtil {
       .toISOString(keepOffset);
   }
 
-  static toObject(timeStr: string): any {
+  static toObject(timeStr: string): MomentObjectOutput {
     return moment(timeStr).toObject();
   }
 
@@ -195,7 +204,7 @@ export default class TimeUtil {
    * 当前时间
    * @returns {*|moment.Moment}
    */
-  static now(): any {
+  static now(): Moment {
     return moment();
   }
 
@@ -203,36 +212,40 @@ export default class TimeUtil {
    * 时间减
    * @param momentObj {object}
    * @param num {number}
-   * @param unit {string}
+   * @param unit {unitOfTime.Diff}
    * @returns {moment.Moment}
    */
-  static sub(momentObj: any, num: number, unit: string): any {
-    return momentObj.subtract(num, unit);
+  static sub(momentObj: Moment, num: number, unit: unitOfTime.Diff): Moment {
+    return momentObj.subtract(num as any, unit);
   }
 
-  static add(momentObj: any, num: number, unit: string): any {
-    return momentObj.add(num, unit);
+  static add(momentObj: Moment, num: number, unit: unitOfTime.Diff): Moment {
+    return momentObj.add(num as any, unit);
   }
 
   /**
    * 小于
    * @param momentObj
-   * @param time {Moment|String|Number|Date|Array}
+   * @param time {Moment|String|Number|Date}
    * @returns {*|boolean}
    */
-  static lt(momentObj: any, time: any): boolean {
-    return momentObj.isBefore(time);
+  static lt(momentObj: Moment, time: Moment | String | Number | Date): boolean {
+    return momentObj.isBefore(time as any);
   }
 
-  static gt(momentObj: any, time: any): boolean {
-    return momentObj.isAfter(time);
+  static gt(momentObj: Moment, time: Moment | String | Number | Date): boolean {
+    return momentObj.isAfter(time as any);
   }
 
-  static gtAndLt(momentObj: any, startTime: any, endTime: any): boolean {
+  static gtAndLt(
+    momentObj: Moment,
+    startTime: MomentInput,
+    endTime: MomentInput
+  ): boolean {
     return momentObj.isBetween(startTime, endTime);
   }
 
-  static toMomentObj(str: string): any {
+  static toMomentObj(str: string | number | Date): Moment {
     return moment(str);
   }
 
@@ -243,11 +256,15 @@ export default class TimeUtil {
    * @param unit {string} years, months, weeks, days, hours, minutes, seconds
    * @returns {*|number}
    */
-  static diff(momentObj1: any, momentObj2: any, unit: string): number {
+  static diff(
+    momentObj1: Moment,
+    momentObj2: Moment,
+    unit: unitOfTime.Diff
+  ): number {
     return momentObj1.diff(momentObj2, unit);
   }
 
-  static utcStandardStrToMomentObj(mysqlDateTime: string): any {
+  static utcStandardStrToMomentObj(mysqlDateTime: string): Moment {
     return moment(mysqlDateTime);
   }
 }
