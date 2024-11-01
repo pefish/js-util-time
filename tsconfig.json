@@ -11,17 +11,9 @@
     "sourceMap": true,
     "outDir": "lib",
     "baseUrl": ".",
-    "typeRoots": [
-      "node_modules/@types",
-      "node_modules/@pefish"
-    ],
-    "lib": [
-      "es2016",
-      "es2017"
-    ],
+    "typeRoots": ["node_modules/@types", "node_modules/@pefish"],
+    "lib": ["es2016", "es2017"],
     "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }

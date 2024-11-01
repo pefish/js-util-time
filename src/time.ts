@@ -1,5 +1,5 @@
-import moment from 'moment'
-import util from 'util'
+import moment from "moment";
+import util from "util";
 
 /**
  * 时间工具类
@@ -13,20 +13,24 @@ export default class TimeUtil {
    * @param exitIfErr
    * @returns {Promise<void>}
    */
-  static async setInterval(fun: () => Promise<any>, interval: number, exitIfErr: boolean = false): Promise<void> {
+  static async setInterval(
+    fun: () => Promise<any>,
+    interval: number,
+    exitIfErr: boolean = false
+  ): Promise<void> {
     while (true) {
       try {
-        const result = await fun()
+        const result = await fun();
         if (result === 0) {
-          break
+          break;
         }
       } catch (err) {
-        console.error(util.inspect(err))
+        console.error(util.inspect(err));
         if (exitIfErr === true) {
-          throw err
+          throw err;
         }
       }
-      await TimeUtil.sleep(interval)
+      await TimeUtil.sleep(interval);
     }
   }
 
@@ -36,27 +40,37 @@ export default class TimeUtil {
    * @param msg
    * @returns {Promise<void>}
    */
-  static async sleepSyncFor(globalName: string = 'signal', msg: string = 'blocking...'): Promise<void> {
+  static async sleepSyncFor(
+    globalName: string = "signal",
+    msg: string = "blocking..."
+  ): Promise<void> {
     while (global[globalName] === 1) {
-      msg && console.info(msg)
-      await TimeUtil.sleep(3000)
+      msg && console.info(msg);
+      await TimeUtil.sleep(3000);
     }
   }
 
-  static async sleepFor(globalSignalName: string = 'signal', globalRunningNumName: string = 'runningNum', msg: string = 'blocking...'): Promise<void> {
-    global[globalSignalName] = 1 // 指示所有程序该停了
-    while (global[globalRunningNumName] !== 0 && global[globalRunningNumName] !== undefined) {
-      msg && console.info(msg, `running: ${global[globalRunningNumName]}`)
-      await TimeUtil.sleep(2000)
+  static async sleepFor(
+    globalSignalName: string = "signal",
+    globalRunningNumName: string = "runningNum",
+    msg: string = "blocking..."
+  ): Promise<void> {
+    global[globalSignalName] = 1; // 指示所有程序该停了
+    while (
+      global[globalRunningNumName] !== 0 &&
+      global[globalRunningNumName] !== undefined
+    ) {
+      msg && console.info(msg, `running: ${global[globalRunningNumName]}`);
+      await TimeUtil.sleep(2000);
     }
   }
 
   static sleep(sleep: number): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve()
-      }, sleep)
-    })
+        resolve();
+      }, sleep);
+    });
   }
 
   /**
@@ -67,10 +81,10 @@ export default class TimeUtil {
   static timeout<T>(fun: () => Promise<T>, timeout: number): Promise<T> {
     return Promise.race([
       fun(),
-      new Promise((_, reject) =>
-        setTimeout(() => reject(`timeout`), timeout)
-      ),
-    ])
+      new Promise((_, reject) => {
+        setTimeout(() => reject(`timeout`), timeout);
+      }) as any,
+    ]);
   }
 
   /**
@@ -79,7 +93,7 @@ export default class TimeUtil {
    * @returns {number}
    */
   static utcStandardStrToTimestamp(mysqlDateTime: string): number {
-    return moment(mysqlDateTime).valueOf()
+    return moment(mysqlDateTime).valueOf();
   }
 
   /**
@@ -88,12 +102,15 @@ export default class TimeUtil {
    * @param format
    * @returns {string}
    */
-  static toUtcStr(timestamp: number, format: string = 'YYYY-MM-DD HH:mm:ss:SSS'): string {
-    return moment.utc(timestamp).format(format)
+  static timestampToUtcStr(
+    data: string | number | Date,
+    format: string = "YYYY-MM-DD HH:mm:ss:SSS"
+  ): string {
+    return moment.utc(data).format(format);
   }
 
   static toUtcStandardStr(timestamp: number): string {
-    return moment.utc(timestamp).toISOString(false)
+    return moment.utc(timestamp).toISOString(false);
   }
 
   /**
@@ -108,12 +125,23 @@ export default class TimeUtil {
    * @param keepOffset {boolean} true的话就是2018-03-04T22:51:40.952+08:00, false就是2018-03-04T14:51:40.952Z
    * @returns {string}
    */
-  static geneUtcStandardStr(year: number, month: number = 2, day: number = 1, hour: number = 0, minute: number = 0, second: number = 0, millisecond: number = 0, keepOffset: boolean = true): string {
-    return moment.utc(new Date(year, month - 1, day, hour, minute, second, millisecond)).toISOString(keepOffset)
+  static geneUtcStandardStr(
+    year: number,
+    month: number = 2,
+    day: number = 1,
+    hour: number = 0,
+    minute: number = 0,
+    second: number = 0,
+    millisecond: number = 0,
+    keepOffset: boolean = true
+  ): string {
+    return moment
+      .utc(new Date(year, month - 1, day, hour, minute, second, millisecond))
+      .toISOString(keepOffset);
   }
 
   static toObject(timeStr: string): any {
-    return moment(timeStr).toObject()
+    return moment(timeStr).toObject();
   }
 
   /**
@@ -128,25 +156,39 @@ export default class TimeUtil {
    * @param format
    * @returns {string}
    */
-  static geneUtcStr(year: number, month: number = 2, day: number = 1, hour: number = 0, minute: number = 0, second: number = 0, millisecond: number = 0, format: string = 'YYYY-MM-DD HH:mm:ss'): string {
-    return moment.utc(new Date(year, month - 1, day, hour, minute, second, millisecond)).format(format)
+  static geneUtcStr(
+    year: number,
+    month: number = 2,
+    day: number = 1,
+    hour: number = 0,
+    minute: number = 0,
+    second: number = 0,
+    millisecond: number = 0,
+    format: string = "YYYY-MM-DD HH:mm:ss"
+  ): string {
+    return moment
+      .utc(new Date(year, month - 1, day, hour, minute, second, millisecond))
+      .format(format);
   }
 
   /**
    * utc时间转化为本地时间
-   * @param date Date对象或者utc标准时间字符串
+   * @param date Date对象 或者 utc标准时间字符串 或者 时间戳
    * @param format
    * @returns {string}
    */
-  static toLocalStr(date: string, format: string = 'YYYY-MM-DD HH:mm:ss'): string {
-    return moment.utc(date).local().format(format)
+  static toLocalStr(
+    data: string | number | Date,
+    format: string = "YYYY-MM-DD HH:mm:ss"
+  ): string {
+    return moment.utc(data).local().format(format);
   }
 
   /**
    * 获取现在时刻的utc标准字符串
    */
   static getCurrentUtcStandardStr(keepOffset: boolean = true): string {
-    return moment.utc(new Date()).toISOString(keepOffset)
+    return moment.utc(new Date()).toISOString(keepOffset);
   }
 
   /**
@@ -154,7 +196,7 @@ export default class TimeUtil {
    * @returns {*|moment.Moment}
    */
   static now(): any {
-    return moment()
+    return moment();
   }
 
   /**
@@ -165,11 +207,11 @@ export default class TimeUtil {
    * @returns {moment.Moment}
    */
   static sub(momentObj: any, num: number, unit: string): any {
-    return momentObj.subtract(num, unit)
+    return momentObj.subtract(num, unit);
   }
 
   static add(momentObj: any, num: number, unit: string): any {
-    return momentObj.add(num, unit)
+    return momentObj.add(num, unit);
   }
 
   /**
@@ -179,19 +221,19 @@ export default class TimeUtil {
    * @returns {*|boolean}
    */
   static lt(momentObj: any, time: any): boolean {
-    return momentObj.isBefore(time)
+    return momentObj.isBefore(time);
   }
 
   static gt(momentObj: any, time: any): boolean {
-    return momentObj.isAfter(time)
+    return momentObj.isAfter(time);
   }
 
   static gtAndLt(momentObj: any, startTime: any, endTime: any): boolean {
-    return momentObj.isBetween(startTime, endTime)
+    return momentObj.isBetween(startTime, endTime);
   }
 
   static toMomentObj(str: string): any {
-    return moment(str)
+    return moment(str);
   }
 
   /**
@@ -202,10 +244,10 @@ export default class TimeUtil {
    * @returns {*|number}
    */
   static diff(momentObj1: any, momentObj2: any, unit: string): number {
-    return momentObj1.diff(momentObj2, unit)
+    return momentObj1.diff(momentObj2, unit);
   }
 
   static utcStandardStrToMomentObj(mysqlDateTime: string): any {
-    return moment(mysqlDateTime)
+    return moment(mysqlDateTime);
   }
 }
