@@ -13,15 +13,15 @@ import util from "util";
 export default class TimeUtil {
   /**
    * await 可同步
-   * @param fun
+   * @param fun 返回 0 可以正常退出
    * @param interval
-   * @param exitIfErr
+   * @param exitIfErr 如果是 true，异常会直接抛出，如果是 false，异常不会抛出，仅仅打印异常
    * @returns {Promise<void>}
    */
   static async setInterval(
-    fun: () => Promise<any>,
+    fun: () => Promise<number>,
     interval: number,
-    exitIfErr: boolean = false
+    exitIfErr: boolean = true
   ): Promise<void> {
     while (true) {
       try {
