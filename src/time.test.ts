@@ -1,11 +1,12 @@
 import * as assert from "assert";
+import moment from "moment";
 import TimeUtil from "./time";
 
 describe("timeUtil", () => {
-  it("now", async () => {
+  it("currentUtcStr", async () => {
     try {
-      const result = TimeUtil.now();
-      // logger.error(result)
+      const result = TimeUtil.currentUtcStr();
+      console.error(result);
       // assert.strictEqual(tx['outputWithIndex'][0]['address'], 'moneyqMan7uh8FqdCA2BV5yZ8qVrc9ikLP')
     } catch (err) {
       console.error(err);
@@ -15,7 +16,7 @@ describe("timeUtil", () => {
 
   it("sub", async () => {
     try {
-      const result = TimeUtil.sub(TimeUtil.now(), 1, "d");
+      const result = TimeUtil.sub(moment(), 1, "d");
       // logger.error(result)
       // assert.strictEqual(tx['outputWithIndex'][0]['address'], 'moneyqMan7uh8FqdCA2BV5yZ8qVrc9ikLP')
     } catch (err) {
@@ -26,7 +27,7 @@ describe("timeUtil", () => {
 
   it("add", async () => {
     try {
-      const result = TimeUtil.add(TimeUtil.now(), 1, "d");
+      const result = TimeUtil.add(moment(), 1, "d");
       // logger.error(result)
       // assert.strictEqual(tx['outputWithIndex'][0]['address'], 'moneyqMan7uh8FqdCA2BV5yZ8qVrc9ikLP')
     } catch (err) {
@@ -37,7 +38,7 @@ describe("timeUtil", () => {
 
   it("lt", async () => {
     try {
-      const result = TimeUtil.lt(TimeUtil.now(), "2018-04-26 15:04:00");
+      const result = TimeUtil.lt(moment(), "2018-04-26 15:04:00");
       // logger.error(result)
       // assert.strictEqual(tx['outputWithIndex'][0]['address'], 'moneyqMan7uh8FqdCA2BV5yZ8qVrc9ikLP')
     } catch (err) {

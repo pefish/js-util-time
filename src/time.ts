@@ -202,10 +202,10 @@ export default class TimeUtil {
 
   /**
    * 当前时间
-   * @returns {*|moment.Moment}
+   * @returns {string}
    */
-  static now(): Moment {
-    return moment();
+  static currentUtcStr(): string {
+    return moment.utc(moment()).format("YYYY-MM-DD HH:mm:ss");
   }
 
   /**
@@ -237,7 +237,7 @@ export default class TimeUtil {
     return momentObj.isAfter(time as any);
   }
 
-  static gtAndLt(
+  static between(
     momentObj: Moment,
     startTime: MomentInput,
     endTime: MomentInput
