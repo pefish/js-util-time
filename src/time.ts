@@ -83,11 +83,19 @@ export default class TimeUtil {
    * @param fun 异步函数
    * @param timeout 超时时间
    */
-  static timeout<T>(fun: () => Promise<T>, timeout: number): Promise<T> {
+  static timeout<T>(
+    fun: (abortSignal: AbortSignal) => Promise<T>,
+    timeout: number,
+    err: Error = new Error("timeout")
+  ): Promise<T> {
+    const abortController = new AbortController();
     return Promise.race([
-      fun(),
+      fun(abortController.signal),
       new Promise((_, reject) => {
-        setTimeout(() => reject(`timeout`), timeout);
+        setTimeout(() => {
+          reject(err);
+          abortController.abort(err);
+        }, timeout);
       }) as any,
     ]);
   }
